@@ -5,8 +5,6 @@ import {store} from "@/app/store";
 
 export default function RootLayout() {
 
-
-
   return (
     <Provider store={store}>
       <Stack/>

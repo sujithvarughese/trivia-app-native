@@ -5,6 +5,8 @@ type stateProps = {
   highScore: number,
   completed: any[],
   questions: any[],
+  strikes: number,
+  questionIndex: number,
   gameOver: boolean,
   category: number,
   loading: boolean,
@@ -16,6 +18,8 @@ const initialState: stateProps = {
   highScore: 0,
   completed: [],
   questions: [],
+  strikes: 0,
+  questionIndex: 0,
   gameOver: false,
   category: 9,
   loading: false,
@@ -29,13 +33,9 @@ const gameSlice = createSlice({
     setNewGame: (state: stateProps, action): void => {
       state.questions = action.payload
       state.score = 0
-      state.completed.push(state.questions.pop())
-    },
-    setQuestions: (state, action) => {
-      state.questions = action.payload
-    },
-    addQuestion: (state) => {
-      state.completed.push(state.questions.pop())
+      state.showSettings = false
+      state.questionIndex = 0
+      state.strikes = 0
     },
     setScore: (state, action) => {
       let multiplier = 0;
@@ -64,6 +64,7 @@ const gameSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(fetchQuestions.fulfilled, (state, action) => {
       state.questions = action.payload
+      state.score = 0
       state.loading = false
     })
     builder.addCase(fetchQuestions.pending, state => {
@@ -76,35 +77,36 @@ const gameSlice = createSlice({
   }
 })
 
-export const fetchQuestions = createAsyncThunk("game/fetchQuestions", async (category: 9) => {
-    const response = await fetch(`https://opentdb.com/api.php?amount=10&category=${category}&difficulty=easy&type=multiple`)
-    type resultsType = {
-      category: string,
-      difficulty: string,
-      question: string,
-      incorrect_answers: string[],
-      correct_answer: string
-    }
-    const { results } = await response.json()
-    return results.map((result: resultsType) => {
-      const category = decodeURIComponent(result.category)
-      const difficulty = result.difficulty.charAt(0).toUpperCase().concat(result.difficulty.substring(1))
-      const question = decodeURIComponent(result.question)
-      const incorrectAnswers = result.incorrect_answers.map((answer: string) => {
-        return {
-          response: decodeURIComponent(answer),
-          correct: false
-        }
-      })
-      const correctAnswer = {
-        response: decodeURIComponent(result.correct_answer),
-        correct: true
+export const fetchQuestions = createAsyncThunk("game/fetchQuestions", async (category: number) => {
+  console.log("fetching questions...")
+  const response = await fetch(`https://opentdb.com/api.php?amount=10&category=${category}&difficulty=easy&type=multiple`)
+  type resultsType = {
+    category: string,
+    difficulty: string,
+    question: string,
+    incorrect_answers: string[],
+    correct_answer: string
+  }
+  const { results } = await response.json()
+  return results.map((result: resultsType) => {
+    const category = decodeURIComponent(result.category)
+    const difficulty = result.difficulty.charAt(0).toUpperCase().concat(result.difficulty.substring(1))
+    const question = decodeURIComponent(result.question)
+    const incorrectAnswers = result.incorrect_answers.map((answer: string) => {
+      return {
+        response: decodeURIComponent(answer),
+        correct: false
       }
-      const choices = [...incorrectAnswers, correctAnswer]
-      choices.sort(() => Math.random() - 0.5)
-      return { category, difficulty, question, choices }
     })
+    const correctAnswer = {
+      response: decodeURIComponent(result.correct_answer),
+      correct: true
+    }
+    const choices = [...incorrectAnswers, correctAnswer]
+    choices.sort(() => Math.random() - 0.5)
+    return { category, difficulty, question, choices }
+  })
 })
 
 export default gameSlice.reducer;
-export const { setNewGame, setQuestions, addQuestion, setScore, setGameOver, unsetGameOver, setShowSettings } = gameSlice.actions
+export const { setNewGame, setScore, setGameOver, unsetGameOver, setShowSettings } = gameSlice.actions

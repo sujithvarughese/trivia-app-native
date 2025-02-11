@@ -3,10 +3,12 @@ import {Text, View, StyleSheet, Pressable} from "react-native";
 type Props = {
   label: string,
   theme?: 'correct' | 'incorrect',
-  onPress: () => void,
+  correct: boolean,
 }
 
-export default function ResponseButton({ label, theme, onPress }: Props) {
+export default function ResponseButton({ label, theme, correct }: Props) {
+
+
   if (theme === 'correct') {
     return (
       <View style={[styles.container, { borderWidth: 4, borderColor: '#ffd33d', borderRadius: 18 }]}>

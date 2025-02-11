@@ -5,11 +5,16 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import {Pressable} from "react-native";
 import  { setShowSettings } from "@/features/gameSlice";
 import Settings from "@/components/Settings";
+import Question from "@/components/Question";
 
 export default function Index() {
 
   const dispatch = useDispatch()
   const showSettings = useSelector(state => state.game.showSettings)
+  const questions = useSelector(state => state.game.questions)
+  const questionIndex = useSelector(state => state.game.questionIndex)
+
+
   return (
 
       <View style={style.container}>
@@ -19,7 +24,7 @@ export default function Index() {
           }}
         />
         {showSettings && <Settings showSettings={showSettings} onClose={() => dispatch(setShowSettings(false))} />}
-        <Text>Edit app/index.tsx to edit this screen.</Text>
+        <Question />
       </View>
   );
 }
