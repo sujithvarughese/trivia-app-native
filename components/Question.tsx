@@ -35,13 +35,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 12,
-    gap: 8,
+    gap: 24,
   },
   category: {
     color: "#fff"
   },
   question: {
-    color: "#fff"
+    color: "#fff",
+    fontSize: 20,
   },
   responseContainer: {
     gap: 12

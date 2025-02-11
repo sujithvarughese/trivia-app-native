@@ -27,7 +27,6 @@ export default function Button({ label, theme, onPress }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     height: 68,
     alignItems: 'center',
     justifyContent: 'center',
@@ -36,7 +35,7 @@ const styles = StyleSheet.create({
     borderRadius: 18
   },
   button: {
-    borderRadius: 10,
+    borderRadius: 18,
     width: '100%',
     height: '100%',
     alignItems: 'center',
