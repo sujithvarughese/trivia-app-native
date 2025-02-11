@@ -1,26 +1,30 @@
 import {Text, View, StyleSheet, Pressable} from "react-native";
+import { setGameOver, setScore } from '../features/gameSlice'
+import {useDispatch} from "react-redux";
 
 type Props = {
   label: string,
-  theme?: 'correct' | 'incorrect',
+  difficulty: string,
   correct: boolean,
+  completed: boolean,
+  setCompleted: (completed: boolean) => void,
 }
 
-export default function ResponseButton({ label, theme, correct }: Props) {
+export default function ResponseButton({ label, difficulty, correct, completed, setCompleted }: Props) {
 
+  const dispatch = useDispatch()
+  const handlePress = () => {
+    setCompleted(true)
+    dispatch(setScore({ difficulty, correct }))
+    setTimeout(() => {
+      setCompleted(false)
+    }, 1000)
+  }
 
-  if (theme === 'correct') {
+  if (completed && correct) {
     return (
       <View style={[styles.container, { borderWidth: 4, borderColor: '#ffd33d', borderRadius: 18 }]}>
-        <Pressable style={[styles.button, { backgroundColor: 'green' }]}>
-          <Text style={styles.label}>{label}</Text>
-        </Pressable>
-      </View>
-    )
-  } else if (theme === 'incorrect') {
-    return (
-      <View style={[styles.container, { borderWidth: 4, borderColor: '#ffd33d', borderRadius: 18 }]}>
-        <Pressable style={[styles.button, { backgroundColor: 'red' }]}>
+        <Pressable style={[styles.button, { backgroundColor: 'green' }]} onPress={handlePress} disabled={completed}>
           <Text style={styles.label}>{label}</Text>
         </Pressable>
       </View>
@@ -28,7 +32,7 @@ export default function ResponseButton({ label, theme, correct }: Props) {
   }
   return (
     <View style={styles.container}>
-      <Pressable style={styles.button}>
+      <Pressable style={styles.button} onPress={handlePress} disabled={completed}>
         <Text style={styles.label}>{label}</Text>
       </Pressable>
     </View>
@@ -53,7 +57,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   label: {
-    color: '#fff',
     fontSize: 16,
   }
 });

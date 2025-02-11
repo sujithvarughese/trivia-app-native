@@ -45,7 +45,6 @@ export default function Settings({ showSettings, onClose }: Props) {
         choices.sort(() => Math.random() - 0.5)
         return { category, difficulty, question, choices }
       })
-      console.log(questions)
       dispatch(setNewGame(questions))
     } catch (error: any) {
       console.log(error)

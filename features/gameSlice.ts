@@ -38,12 +38,16 @@ const gameSlice = createSlice({
       state.strikes = 0
     },
     setScore: (state, action) => {
+      if (!action.payload.correct) {
+        state.strikes += 1
+        return
+      }
       let multiplier = 0;
-      if (action.payload === "Easy") {
+      if (action.payload.difficulty === "Easy") {
         multiplier += 100
-      } else if (action.payload === "Medium") {
+      } else if (action.payload.difficulty === "Medium") {
         multiplier += 200
-      } else if (action.payload === "Hard") {
+      } else if (action.payload.difficulty === "Hard") {
         multiplier += 500
       }
       state.score += multiplier
