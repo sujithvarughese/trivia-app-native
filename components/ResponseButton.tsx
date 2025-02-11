@@ -1,6 +1,6 @@
 import {Text, View, StyleSheet, Pressable} from "react-native";
-import {fetchQuestions, setGameOver, setNextQuestion, setScore} from '../features/gameSlice'
-import {useDispatch, useSelector} from "react-redux";
+import {fetchQuestions, setNextQuestion, setScore} from '@/features/gameSlice'
+import {useAppDispatch, useAppSelector} from "@/app/hooks";
 
 type Props = {
   label: string,
@@ -12,10 +12,10 @@ type Props = {
 
 export default function ResponseButton({ label, difficulty, correct, completed, setCompleted }: Props) {
 
-  const dispatch = useDispatch()
-  const questions = useSelector(state => state.game.questions)
-  const questionIndex = useSelector(state => state.game.questionIndex)
-  const category = useSelector(state => state.game.category)
+  const dispatch = useAppDispatch()
+  const questions = useAppSelector(state => state.game.questions)
+  const questionIndex = useAppSelector(state => state.game.questionIndex)
+  const category = useAppSelector(state => state.game.category)
 
   const handlePress = () => {
     setCompleted(true)

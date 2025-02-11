@@ -1,10 +1,10 @@
 import {Text, View, StyleSheet} from "react-native";
-import { useSelector } from 'react-redux'
+import {useAppSelector} from "@/app/hooks";
 
 export default function Score() {
 
-  const score = useSelector(state => state.game.score)
-  const highScore = useSelector(state => state.game.highScore)
+  const score = useAppSelector(state => state.game.score)
+  const highScore = useAppSelector(state => state.game.highScore)
 
     return (
       <View style={styles.container}>
@@ -18,9 +18,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#25292e',
     borderRadius: 4,
-    position: 'absolute',
-    top: 16,
-    right: 16,
     padding: 12,
     gap: 4
   },

@@ -2,9 +2,8 @@ import {Text, View, StyleSheet, Modal} from "react-native";
 import { categories } from "@/utilities/categories";
 import Button from "@/components/Button";
 import {Picker} from '@react-native-picker/picker';
-import { useState, useEffect } from "react";
 import {fetchQuestions, setCategory, setNewGame} from "@/features/gameSlice";
-import {useDispatch, useSelector} from "react-redux";
+import {useAppDispatch, useAppSelector} from "@/app/hooks";
 
 type Props = {
   showSettings: boolean,
@@ -13,14 +12,13 @@ type Props = {
 
 export default function Settings({ showSettings, onClose }: Props) {
 
-  const category = useSelector(state => state.game.category)
-  const dispatch = useDispatch()
+  const category = useAppSelector(state => state.game.category)
+  const dispatch = useAppDispatch()
 
   const saveSettings = async () => {
       dispatch(fetchQuestions(category))
       dispatch(setNewGame())
   }
-
 
   return (
     <Modal animationType="slide" transparent={false} visible={showSettings}>

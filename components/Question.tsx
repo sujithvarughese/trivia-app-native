@@ -1,14 +1,13 @@
 import {Text, View, StyleSheet} from "react-native";
-import {useDispatch, useSelector} from "react-redux";
 import ResponseButton from "@/components/ResponseButton";
-import {useEffect, useState} from "react";
-import {fetchQuestions, setNextQuestion} from "@/features/gameSlice";
+import { useState } from "react";
+import {useAppSelector} from "@/app/hooks";
 
 
 export default function Question() {
 
-  const questions = useSelector(state => state.game.questions)
-  const questionIndex = useSelector(state => state.game.questionIndex)
+  const questions = useAppSelector(state => state.game.questions)
+  const questionIndex = useAppSelector(state => state.game.questionIndex)
   const [completed, setCompleted] = useState<boolean>(false)
 
   return (

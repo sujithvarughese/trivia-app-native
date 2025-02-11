@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 
-type stateProps = {
+export type stateProps = {
   score: number,
   highScore: number,
   completed: any[],
@@ -11,6 +11,11 @@ type stateProps = {
   category: number,
   loading: boolean,
   showSettings: boolean
+}
+
+type SetScoreProps = {
+  correct: boolean,
+  difficulty: string
 }
 
 const initialState: stateProps = {
@@ -36,10 +41,10 @@ const gameSlice = createSlice({
       state.questionIndex = 0
       state.strikes = 0
     },
-    setCategory: (state, action: PayloadAction<number>) => {
+    setCategory: (state: stateProps, action: PayloadAction<number>) => {
       state.category = action.payload
     },
-    setScore: (state, action) => {
+    setScore: (state: stateProps, action: PayloadAction<SetScoreProps>) => {
       if (!action.payload.correct) {
         state.strikes += 1
         return

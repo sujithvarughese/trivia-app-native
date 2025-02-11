@@ -1,6 +1,5 @@
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import {Stack} from "expo-router";
-import {useDispatch, useSelector} from "react-redux";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import {Pressable} from "react-native";
 import {setGameOver, setShowSettings} from "@/features/gameSlice";
@@ -9,15 +8,16 @@ import Question from "@/components/Question";
 import {useEffect} from "react";
 import GameOver from "@/components/GameOver";
 import Score from "@/components/Score";
+import Strikes from "@/components/Strikes";
+import {useAppDispatch, useAppSelector} from "@/app/hooks";
 
 export default function Index() {
 
-  const dispatch = useDispatch()
-  const showSettings = useSelector(state => state.game.showSettings)
-  const strikes = useSelector(state => state.game.strikes)
-  const gameOver = useSelector(state => state.game.gameOver)
+  const dispatch = useAppDispatch()
+  const showSettings = useAppSelector(state => state.game.showSettings)
+  const strikes = useAppSelector(state => state.game.strikes)
+  const gameOver = useAppSelector(state => state.game.gameOver)
 
-  console.log(strikes)
   useEffect(() => {
     if (strikes >= 3) {
       dispatch(setGameOver())
@@ -33,7 +33,11 @@ export default function Index() {
         />
         {showSettings && <Settings showSettings={showSettings} onClose={() => dispatch(setShowSettings(false))} />}
         {gameOver && <GameOver />}
-        <Score />
+        <View style={style.infoBar}>
+          <Strikes />
+          <Score />
+        </View>
+
         <Question />
       </View>
   );
@@ -44,5 +48,14 @@ const style = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  infoBar: {
+    position: 'absolute',
+    top: 0,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 10,
   }
 })
