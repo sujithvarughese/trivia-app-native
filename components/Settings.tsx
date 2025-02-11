@@ -21,6 +21,7 @@ export default function Settings({ showSettings, onClose }: Props) {
         </View>
         <View style={styles.content}>
           <View style={styles.pickerContainer}>
+            <Text>Select Category</Text>
             <Picker
               selectedValue={selectedCategory}
               onValueChange={(itemValue, itemIndex) => setSelectedCategory(itemValue)}
