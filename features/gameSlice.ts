@@ -8,6 +8,7 @@ type stateProps = {
   gameOver: boolean,
   category: number,
   loading: boolean,
+  showSettings: boolean
 }
 
 const initialState: stateProps = {
@@ -17,7 +18,8 @@ const initialState: stateProps = {
   questions: [],
   gameOver: false,
   category: 9,
-  loading: false
+  loading: false,
+  showSettings: false
 }
 
 const gameSlice = createSlice({
@@ -54,6 +56,9 @@ const gameSlice = createSlice({
     },
     unsetGameOver: (state) => {
       state.gameOver = false
+    },
+    setShowSettings: (state, action) => {
+      state.showSettings = action.payload || !state.showSettings
     }
   },
   extraReducers: builder => {
@@ -102,4 +107,4 @@ export const fetchQuestions = createAsyncThunk("game/fetchQuestions", async (cat
 })
 
 export default gameSlice.reducer;
-export const { setNewGame, setQuestions, addQuestion, setScore, setGameOver, unsetGameOver } = gameSlice.actions
+export const { setNewGame, setQuestions, addQuestion, setScore, setGameOver, unsetGameOver, setShowSettings } = gameSlice.actions
