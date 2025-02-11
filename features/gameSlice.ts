@@ -30,12 +30,14 @@ const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
-    setNewGame: (state: stateProps, action): void => {
-      state.questions = action.payload
+    setNewGame: (state: stateProps): void => {
       state.score = 0
       state.showSettings = false
       state.questionIndex = 0
       state.strikes = 0
+    },
+    setCategory: (state, action: PayloadAction<number>) => {
+      state.category = action.payload
     },
     setScore: (state, action) => {
       if (!action.payload.correct) {
@@ -52,6 +54,9 @@ const gameSlice = createSlice({
       }
       state.score += multiplier
     },
+    setNextQuestion: (state) => {
+      state.questionIndex += 1
+    },
     setGameOver: (state) => {
       if (state.score > state.highScore) {
         state.highScore = state.score
@@ -60,6 +65,8 @@ const gameSlice = createSlice({
     },
     unsetGameOver: (state) => {
       state.gameOver = false
+      state.score = 0
+      state.strikes = 0
     },
     setShowSettings: (state, action) => {
       state.showSettings = action.payload || !state.showSettings
@@ -68,7 +75,7 @@ const gameSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(fetchQuestions.fulfilled, (state, action) => {
       state.questions = action.payload
-      state.score = 0
+      state.questionIndex = 0
       state.loading = false
     })
     builder.addCase(fetchQuestions.pending, state => {
@@ -81,9 +88,10 @@ const gameSlice = createSlice({
   }
 })
 
-export const fetchQuestions = createAsyncThunk("game/fetchQuestions", async (category: number) => {
-  console.log("fetching questions...")
-  const response = await fetch(`https://opentdb.com/api.php?amount=10&category=${category}&difficulty=easy&type=multiple`)
+export const fetchQuestions = createAsyncThunk(
+  "game/fetchQuestions",
+  async (category: number) => {
+  const response = await fetch(`https://opentdb.com/api.php?amount=25&category=${category}&type=multiple&encode=url3986`)
   type resultsType = {
     category: string,
     difficulty: string,
@@ -113,4 +121,4 @@ export const fetchQuestions = createAsyncThunk("game/fetchQuestions", async (cat
 })
 
 export default gameSlice.reducer;
-export const { setNewGame, setScore, setGameOver, unsetGameOver, setShowSettings } = gameSlice.actions
+export const { setNewGame, setCategory, setScore, setNextQuestion, setGameOver, unsetGameOver, setShowSettings } = gameSlice.actions

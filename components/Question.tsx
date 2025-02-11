@@ -1,7 +1,8 @@
 import {Text, View, StyleSheet} from "react-native";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import ResponseButton from "@/components/ResponseButton";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {fetchQuestions, setNextQuestion} from "@/features/gameSlice";
 
 
 export default function Question() {

@@ -1,6 +1,6 @@
 import {Text, View, StyleSheet, Pressable} from "react-native";
-import { setGameOver, setScore } from '../features/gameSlice'
-import {useDispatch} from "react-redux";
+import {fetchQuestions, setGameOver, setNextQuestion, setScore} from '../features/gameSlice'
+import {useDispatch, useSelector} from "react-redux";
 
 type Props = {
   label: string,
@@ -13,10 +13,19 @@ type Props = {
 export default function ResponseButton({ label, difficulty, correct, completed, setCompleted }: Props) {
 
   const dispatch = useDispatch()
+  const questions = useSelector(state => state.game.questions)
+  const questionIndex = useSelector(state => state.game.questionIndex)
+  const category = useSelector(state => state.game.category)
+
   const handlePress = () => {
     setCompleted(true)
     dispatch(setScore({ difficulty, correct }))
     setTimeout(() => {
+      if (questionIndex >= questions.length) {
+        dispatch(fetchQuestions(category))
+      } else {
+        dispatch(setNextQuestion())
+      }
       setCompleted(false)
     }, 1000)
   }

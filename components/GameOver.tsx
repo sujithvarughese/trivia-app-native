@@ -12,7 +12,7 @@ export default function GameOver() {
     <Modal animationType="slide" transparent={false}>
       <View style={styles.container}>
         <Text>Game Over</Text>
-        <Button label="Close" onPress={() => dispatch(unsetGameOver())} />
+        <Button label="Play Again" onPress={() => dispatch(unsetGameOver())} />
       </View>
     </Modal>
   )
