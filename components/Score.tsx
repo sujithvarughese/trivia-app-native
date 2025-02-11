@@ -16,7 +16,6 @@ export default function Score() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#25292e',
     borderRadius: 4,
     padding: 12,
     gap: 4

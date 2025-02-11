@@ -28,7 +28,7 @@ const initialState: stateProps = {
   gameOver: false,
   category: 9,
   loading: false,
-  showSettings: false
+  showSettings: true
 }
 
 const gameSlice = createSlice({

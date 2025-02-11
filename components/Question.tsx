@@ -12,10 +12,9 @@ export default function Question() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.category}>{questions[questionIndex]?.category}</Text>
-      <Text style={styles.difficulty}>{questions[questionIndex]?.difficulty}</Text>
+      <Text style={styles.category}>{questions[questionIndex]?.category} - {questions[questionIndex]?.difficulty}</Text>
       <Text style={styles.question}>{questions[questionIndex]?.question}</Text>
-      <View>
+      <View style={styles.responseContainer}>
         {questions[questionIndex]?.choices.map((choice: any, index: number) =>
           <ResponseButton
             key={index}
@@ -33,14 +32,18 @@ export default function Question() {
 
 const styles = StyleSheet.create({
   container: {
-
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 12,
+    gap: 8,
   },
   category: {
-
-  },
-  difficulty: {
-
+    color: "#fff"
   },
   question: {
+    color: "#fff"
+  },
+  responseContainer: {
+    gap: 12
   }
 })

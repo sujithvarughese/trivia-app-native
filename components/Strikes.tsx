@@ -8,7 +8,7 @@ export default function Strikes() {
 
   return (
     <View style={styles.container}>
-      <Text>Strikes: </Text>
+      <Text style={styles.text}>Strikes: </Text>
       {strikes >= 1 && <FontAwesome name="close" size={24} color="red" />}
       {strikes >= 2 && <FontAwesome name="close" size={24} color="red" />}
       {strikes >= 3 && <FontAwesome name="close" size={24} color="red" />}
@@ -21,5 +21,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  text: {
+    color: '#fff',
   }
 })

@@ -33,12 +33,15 @@ export default function Index() {
         />
         {showSettings && <Settings showSettings={showSettings} onClose={() => dispatch(setShowSettings(false))} />}
         {gameOver && <GameOver />}
+
         <View style={style.infoBar}>
           <Strikes />
           <Score />
         </View>
 
-        <Question />
+        <View style={style.questionContainer}>
+          <Question />
+        </View>
       </View>
   );
 }
@@ -48,8 +51,10 @@ const style = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#25292e",
   },
   infoBar: {
+    backgroundColor: "#1d1f21",
     position: 'absolute',
     top: 0,
     width: "100%",
@@ -57,5 +62,9 @@ const style = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     padding: 10,
+  },
+  questionContainer: {
+    height: '100%',
+    marginTop: 180,
   }
 })

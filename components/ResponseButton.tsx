@@ -32,7 +32,7 @@ export default function ResponseButton({ label, difficulty, correct, completed, 
 
   if (completed && correct) {
     return (
-      <View style={[styles.container, { borderWidth: 4, borderColor: '#ffd33d', borderRadius: 18 }]}>
+      <View style={[styles.container, { borderWidth: 4, borderColor: '#ffd33d' }]}>
         <Pressable style={[styles.button, { backgroundColor: 'green' }]} onPress={handlePress} disabled={completed}>
           <Text style={styles.label}>{label}</Text>
         </Pressable>
@@ -56,6 +56,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 3,
+    borderColor: '#fff',
+    borderWidth: 2,
+    borderRadius: 18
   },
   button: {
     borderRadius: 10,
@@ -66,6 +69,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   label: {
+    color: '#fff',
     fontSize: 16,
   }
 });
