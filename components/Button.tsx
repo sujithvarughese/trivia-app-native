@@ -1,4 +1,6 @@
-import {Text, View, StyleSheet, Pressable} from "react-native";
+import {View, StyleSheet, Pressable} from "react-native";
+import {useTheme} from "@react-navigation/native";
+import Text from "./Text"
 
 type Props = {
   label: string,
@@ -7,6 +9,10 @@ type Props = {
 }
 
 export default function Button({ label, theme, onPress }: Props) {
+
+  const colors = useTheme().colors
+
+
   if (theme === 'primary') {
     return (
       <View style={[styles.container, { borderColor: '#ffd33d'}]}>
@@ -43,7 +49,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   label: {
-    color: '#fff',
-    fontSize: 16,
+
   }
 });

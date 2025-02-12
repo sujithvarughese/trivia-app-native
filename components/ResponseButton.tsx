@@ -1,6 +1,7 @@
-import {Text, View, StyleSheet, Pressable} from "react-native";
+import { View, StyleSheet, Pressable} from "react-native";
 import {fetchQuestions, setNextQuestion, setScore} from '@/features/gameSlice'
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
+import Text from "@/components/Text";
 
 type Props = {
   label: string,
@@ -16,6 +17,7 @@ export default function ResponseButton({ label, difficulty, correct, completed, 
   const questions = useAppSelector(state => state.game.questions)
   const questionIndex = useAppSelector(state => state.game.questionIndex)
   const category = useAppSelector(state => state.game.category)
+  const gameOver = useAppSelector(state => state.game.gameOver)
 
   const handlePress = () => {
     setCompleted(true)
@@ -51,8 +53,7 @@ export default function ResponseButton({ label, difficulty, correct, completed, 
 const styles = StyleSheet.create({
   container: {
     width: 320,
-    height: 68,
-    marginHorizontal: 20,
+    height: 84,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 3,
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   label: {
-    color: '#fff',
-    fontSize: 16,
+    fontSize: 20,
+    fontWeight: '600',
   }
 });

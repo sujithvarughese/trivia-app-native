@@ -1,18 +1,16 @@
-import {Text, View, StyleSheet, Modal} from "react-native";
+import {View, StyleSheet, Modal} from "react-native";
 import { categories } from "@/utilities/categories";
 import Button from "@/components/Button";
 import {Picker} from '@react-native-picker/picker';
-import {fetchQuestions, setCategory, setNewGame} from "@/features/gameSlice";
+import {fetchQuestions, setCategory, setNewGame, setShowSettings} from "@/features/gameSlice";
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
+import Text from "@/components/Text";
 
-type Props = {
-  showSettings: boolean,
-  onClose: () => void,
-}
 
-export default function Settings({ showSettings, onClose }: Props) {
+export default function Settings() {
 
   const category = useAppSelector(state => state.game.category)
+  const showSettings = useAppSelector(state => state.game.showSettings)
   const dispatch = useAppDispatch()
 
   const saveSettings = async () => {
@@ -21,29 +19,35 @@ export default function Settings({ showSettings, onClose }: Props) {
   }
 
   return (
-    <Modal animationType="slide" transparent={false} visible={showSettings}>
+    <Modal animationType="slide" transparent={true} visible={showSettings}>
+
       <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Settings</Text>
         </View>
-        <View style={styles.content}>
-          <View style={styles.pickerContainer}>
-            <Text>Select Category</Text>
-            <Picker
-              selectedValue={category}
-              onValueChange={(itemValue: number) => dispatch(setCategory(itemValue))}
-            >
-              {categories.map((category) =>
-                <Picker.Item key={category.value} label={category.label} value={category.value}/>
-              )}
-            </Picker>
-          </View>
-          <View style={styles.buttonContainer}>
-            <Button label="Save" theme="primary" onPress={saveSettings}/>
-            <Button label="Cancel" onPress={onClose} />
-          </View>
+
+        <View style={styles.pickerContainer}>
+          <Text style={styles.pickerTitle}>Select Category</Text>
+          <Picker
+            selectedValue={category}
+            onValueChange={(itemValue: number) => dispatch(setCategory(itemValue))}
+          >
+            {categories.map((category) =>
+              <Picker.Item
+                key={category.value}
+                label={category.label}
+                value={category.value}
+              />
+            )}
+          </Picker>
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <Button label="Save" theme="primary" onPress={saveSettings}/>
+          <Button label="Cancel" onPress={() => dispatch(setShowSettings(false))} />
         </View>
       </View>
+
     </Modal>
   )
 }
@@ -57,9 +61,11 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 18,
     position: 'absolute',
     bottom: 0,
+    alignItems: 'center',
   },
   titleContainer: {
     height: '16%',
+    width: '100%',
     backgroundColor: '#464C55',
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
@@ -74,13 +80,16 @@ const styles = StyleSheet.create({
 
   },
   pickerContainer: {
+    width: '100%',
+    paddingTop: 20,
 
   },
+  pickerTitle: {
+    textAlign: 'center',
+  },
   buttonContainer: {
-    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    gap: 16,
-    margin: 16
+    marginHorizontal: 60,
+    gap: 16
   }
 });

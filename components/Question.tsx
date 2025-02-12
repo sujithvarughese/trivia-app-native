@@ -1,4 +1,5 @@
-import {Text, View, StyleSheet} from "react-native";
+import { View, StyleSheet} from "react-native";
+import Text from "./Text"
 import ResponseButton from "@/components/ResponseButton";
 import { useState } from "react";
 import {useAppSelector} from "@/app/hooks";
@@ -12,8 +13,12 @@ export default function Question() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.category}>{questions[questionIndex]?.category} - {questions[questionIndex]?.difficulty}</Text>
-      <Text style={styles.question}>{questions[questionIndex]?.question}</Text>
+
+      <View style={styles.questionContainer}>
+        <Text style={styles.category}>{questions[questionIndex]?.category} - {questions[questionIndex]?.difficulty}</Text>
+        <Text style={styles.question}>{questions[questionIndex]?.question}</Text>
+      </View>
+
       <View style={styles.responseContainer}>
         {questions[questionIndex]?.choices.map((choice: any, index: number) =>
           <ResponseButton
@@ -35,14 +40,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 12,
-    gap: 24,
+    gap: 32,
+  },
+  questionContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 12,
   },
   category: {
-    color: "#fff"
+
   },
   question: {
-    color: "#fff",
-    fontSize: 20,
+    fontSize: 18,
+    fontWeight: "600",
   },
   responseContainer: {
     gap: 12

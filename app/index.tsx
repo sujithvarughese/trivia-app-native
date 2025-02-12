@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import {View, StyleSheet, Image} from "react-native";
 import {Stack} from "expo-router";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import {Pressable} from "react-native";
@@ -10,13 +10,12 @@ import GameOver from "@/components/GameOver";
 import Score from "@/components/Score";
 import Strikes from "@/components/Strikes";
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
+import {useTheme} from "@react-navigation/native";
 
 export default function Index() {
 
   const dispatch = useAppDispatch()
-  const showSettings = useAppSelector(state => state.game.showSettings)
   const strikes = useAppSelector(state => state.game.strikes)
-  const gameOver = useAppSelector(state => state.game.gameOver)
 
   useEffect(() => {
     if (strikes >= 3) {
@@ -26,22 +25,28 @@ export default function Index() {
   
   return (
       <View style={style.container}>
-        <Stack.Screen
-          options={{
-            headerRight: () => <Pressable onPress={() => dispatch(setShowSettings(true))}><Ionicons name="settings-sharp" size={24} color="black" /></Pressable>
-          }}
+        <Image
+          source={require("../assets/images/pngtree-purple-technology-atmosphere-colorful-poster-banner-image_49591.jpg")}
+          style={style.background}
+          blurRadius={70}
         />
-        {showSettings && <Settings showSettings={showSettings} onClose={() => dispatch(setShowSettings(false))} />}
-        {gameOver && <GameOver />}
 
         <View style={style.infoBar}>
           <Strikes />
           <Score />
+          <Pressable
+            onPress={() => dispatch(setShowSettings(true))}>
+            <Ionicons name="settings-sharp" size={24} color="#fefefe"/>
+          </Pressable>
         </View>
+
+        <Settings />
+        <GameOver />
 
         <View style={style.questionContainer}>
           <Question />
         </View>
+
       </View>
   );
 }
@@ -49,14 +54,15 @@ export default function Index() {
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#25292e",
+  },
+  background: {
+    position: "absolute",
+    height: "100%",
+    width: "100%",
   },
   infoBar: {
-    backgroundColor: "#1d1f21",
-    position: 'absolute',
-    top: 0,
+    marginTop: 60,
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -65,6 +71,5 @@ const style = StyleSheet.create({
   },
   questionContainer: {
     height: '100%',
-    marginTop: 180,
   }
 })

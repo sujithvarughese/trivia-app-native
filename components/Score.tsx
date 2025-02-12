@@ -1,5 +1,6 @@
-import {Text, View, StyleSheet} from "react-native";
+import {View, StyleSheet} from "react-native";
 import {useAppSelector} from "@/app/hooks";
+import Text from "@/components/Text";
 
 export default function Score() {
 
@@ -9,7 +10,7 @@ export default function Score() {
     return (
       <View style={styles.container}>
         <Text style={styles.score}>Score: {score}</Text>
-        {highScore > 0 && <Text style={styles.highScore}>High Score: {highScore}</Text>}
+        <Text style={styles.highScore}>High Score: {highScore}</Text>
       </View>
     )
 }
@@ -18,14 +19,15 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 4,
     padding: 12,
-    gap: 4
+    gap: 2,
+    justifyContent: "center",
+    alignItems: "center",
   },
   score: {
-    color: "#fff",
-    textAlign: 'right'
+    fontWeight: 700,
   },
   highScore: {
-    color: "#fff",
-    textAlign: 'right'
+
+
   }
 })

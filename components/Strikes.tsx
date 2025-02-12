@@ -1,6 +1,7 @@
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import {useAppSelector} from "@/app/hooks";
+import Text from "@/components/Text";
 
 export default function Strikes() {
 
