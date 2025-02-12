@@ -2,14 +2,28 @@ import { View, StyleSheet} from "react-native";
 import Text from "./Text"
 import ResponseButton from "@/components/ResponseButton";
 import { useState } from "react";
-import {useAppSelector} from "@/app/hooks";
+import {useAppDispatch, useAppSelector} from "@/app/hooks";
+import Button from "@/components/Button";
+import {fetchQuestions, setNextQuestion} from "@/features/gameSlice";
 
 
 export default function Question() {
 
+  const dispatch = useAppDispatch()
   const questions = useAppSelector(state => state.game.questions)
   const questionIndex = useAppSelector(state => state.game.questionIndex)
+  const category = useAppSelector(state => state.game.category)
   const [completed, setCompleted] = useState<boolean>(false)
+
+  const handleNextQuestion = () => {
+    setCompleted(false)
+    if (questionIndex >= questions.length) {
+      dispatch(fetchQuestions(category))
+    } else {
+      dispatch(setNextQuestion())
+    }
+  }
+
 
   return (
     <View style={styles.container}>
@@ -31,6 +45,12 @@ export default function Question() {
           />
         )}
       </View>
+
+      <View style={styles.actionContainer}>
+        <Button label="AI" onPress={() => console.log("AI")} />
+        <Button label="Next" onPress={handleNextQuestion} />
+      </View>
+
     </View>
   )
 }
@@ -55,6 +75,9 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   responseContainer: {
-    gap: 12
+    gap: 32
+  },
+  actionContainer: {
+
   }
 })

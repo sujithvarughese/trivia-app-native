@@ -11,18 +11,13 @@ import Score from "@/components/Score";
 import Strikes from "@/components/Strikes";
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import {useTheme} from "@react-navigation/native";
+import Button from "@/components/Button";
 
 export default function Index() {
 
   const dispatch = useAppDispatch()
   const strikes = useAppSelector(state => state.game.strikes)
 
-  useEffect(() => {
-    if (strikes >= 3) {
-      dispatch(setGameOver())
-    }
-  }, [strikes])
-  
   return (
       <View style={style.container}>
         <Image
@@ -33,7 +28,10 @@ export default function Index() {
 
         <View style={style.infoBar}>
           <Strikes />
-          <Score />
+          <View style={style.scoreContainer}>
+            <Score />
+          </View>
+
           <Pressable
             onPress={() => dispatch(setShowSettings(true))}>
             <Ionicons name="settings-sharp" size={24} color="#fefefe"/>
@@ -46,6 +44,8 @@ export default function Index() {
         <View style={style.questionContainer}>
           <Question />
         </View>
+
+
 
       </View>
   );
@@ -62,14 +62,21 @@ const style = StyleSheet.create({
     width: "100%",
   },
   infoBar: {
-    marginTop: 60,
+    marginTop: 70,
+    marginBottom: 20,
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     padding: 10,
   },
+  scoreContainer: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    marginTop: 'auto',
+  },
   questionContainer: {
     height: '100%',
-  }
+  },
 })

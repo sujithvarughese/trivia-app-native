@@ -1,7 +1,7 @@
 import {View, StyleSheet, Modal} from "react-native";
 import Button from "@/components/Button";
 import {useDispatch} from "react-redux";
-import {unsetGameOver} from "@/features/gameSlice";
+import {setNewGame, unsetGameOver} from "@/features/gameSlice";
 import {useAppSelector} from "@/app/hooks";
 import Text from "../components/Text";
 
@@ -20,7 +20,7 @@ export default function GameOver() {
         <Text style={styles.title}>Game Over</Text>
         {score > highScore && <Text>NEW HIGH SCORE</Text>}
         <Text>Your Score: {score}</Text>
-        <Button label="Play Again" onPress={() => dispatch(unsetGameOver())} />
+        <Button label="Play Again" onPress={() => dispatch(setNewGame())} />
       </View>
     </Modal>
   )

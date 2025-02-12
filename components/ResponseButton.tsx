@@ -22,14 +22,6 @@ export default function ResponseButton({ label, difficulty, correct, completed, 
   const handlePress = () => {
     setCompleted(true)
     dispatch(setScore({ difficulty, correct }))
-    setTimeout(() => {
-      if (questionIndex >= questions.length) {
-        dispatch(fetchQuestions(category))
-      } else {
-        dispatch(setNextQuestion())
-      }
-      setCompleted(false)
-    }, 1000)
   }
 
   if (completed && correct) {
