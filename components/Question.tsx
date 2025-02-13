@@ -4,7 +4,7 @@ import ResponseButton from "@/components/ResponseButton";
 import { useState } from "react";
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import Button from "@/components/Button";
-import {fetchQuestions, setNextQuestion} from "@/features/gameSlice";
+import {fetchAiResponse, fetchQuestions, setNextQuestion} from "@/features/gameSlice";
 
 
 export default function Question() {
@@ -22,6 +22,12 @@ export default function Question() {
       dispatch(setNextQuestion())
     }
   }
+
+  const handleAiResponse = () => {
+    const correctAnswer = questions[questionIndex].choices.find((choice: { response: string, correct: boolean }) => choice.correct).response
+    dispatch(fetchAiResponse(`${questions[questionIndex].question}: ${correctAnswer}`))
+  }
+
 
 
   return (
@@ -45,7 +51,7 @@ export default function Question() {
 
       {completed &&
       <View style={styles.actionContainer}>
-        <Button label="AI" onPress={() => console.log("AI")} />
+        <Button label="AI Explain" onPress={handleAiResponse} />
         <Button label="Next" onPress={handleNextQuestion} />
       </View>
       }
@@ -56,6 +62,7 @@ export default function Question() {
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     margin: 12,
@@ -77,6 +84,10 @@ const styles = StyleSheet.create({
     gap: 32
   },
   actionContainer: {
-
+    flexDirection: 'row',
+    gap: 24,
+    marginHorizontal: 90,
+    alignItems: 'center',
+    justifyContent: 'space-between'
   }
 })

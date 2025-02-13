@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import {str} from "ajv";
+import { openai } from "../utilities/api"
 
 export type stateProps = {
   score: number,
@@ -107,9 +107,7 @@ const gameSlice = createSlice({
   }
 })
 
-export const fetchQuestions = createAsyncThunk(
-  "game/fetchQuestions",
-  async (category: number) => {
+export const fetchQuestions = createAsyncThunk("game/fetchQuestions", async (category: number) => {
   const response = await fetch(`https://opentdb.com/api.php?amount=25&category=${category}&type=multiple&encode=url3986`)
   type resultsType = {
     category: string,
@@ -137,6 +135,27 @@ export const fetchQuestions = createAsyncThunk(
     choices.sort(() => Math.random() - 0.5)
     return { category, difficulty, question, choices }
   })
+})
+
+export const fetchAiResponse = createAsyncThunk("game/fetchAiResponse", async (question: string) => {
+  const run = await openai.post("/threads/runs", {
+    assistant_id: process.env.EXPO_PUBLIC_ASSISTANT_ID,
+    thread: {
+      messages: [{role: "user", content: question }]
+    }
+  })
+  console.log(run.data)
+  const threadId = run.data.thread_id
+  const runId = run.data.id
+  while (run.data.status !== "completed") {
+    run = await openai.get(`/threads/${threadId}/runs/${runId}`)
+  }
+  if (run.data.status === 'completed') {
+    const messages = await openai.get(`/threads/${threadId}/messages`)
+    openai.delete(`https://api.openai.com/v1/threads/${threadId}`)
+    console.log(messages.data.data[0].content[0].text.value.replace(/\【.*?】/g, ''))
+    return messages.data.data[0].content[0].text.value.replace(/\【.*?】/g, '')
+  }
 })
 
 export default gameSlice.reducer;

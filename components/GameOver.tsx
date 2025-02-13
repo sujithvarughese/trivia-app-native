@@ -22,9 +22,11 @@ export default function GameOver() {
     <Modal animationType="slide" transparent={true} visible={gameOver}>
       <View style={styles.container}>
         <Text style={styles.title}>Game Over</Text>
-        {score > highScore && <Text>NEW HIGH SCORE</Text>}
+        {score === highScore && <Text>NEW HIGH SCORE</Text>}
         <Text>Your Score: {score}</Text>
-        <Button label="Play Again" onPress={handleClickNewGame} />
+        <View style={styles.buttonContainer}>
+          <Button label="Play Again" onPress={handleClickNewGame} />
+        </View>
       </View>
     </Modal>
   )
@@ -39,10 +41,13 @@ const styles = StyleSheet.create({
     margin: 'auto',
     padding: 24,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    gap: 12
   },
   title: {
     fontSize: 32,
   },
+  buttonContainer: {
 
+  }
 })

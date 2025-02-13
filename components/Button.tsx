@@ -20,7 +20,10 @@ export default function Button({ label, theme, onPress }: Props) {
   }
   return (
     <View style={styles.container}>
-      <Pressable style={styles.button} onPress={onPress}>
+      <Pressable
+        style={({pressed}) => [{ backgroundColor: pressed && 'gray' }, styles.button,]}
+        onPress={onPress}
+      >
         <Text style={styles.label}>{label}</Text>
       </Pressable>
     </View>
@@ -32,7 +35,6 @@ const styles = StyleSheet.create({
     height: 68,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 3,
     borderWidth: 4,
     borderRadius: 18
   },

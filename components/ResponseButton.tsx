@@ -16,7 +16,11 @@ export default function ResponseButton({ label, difficulty, correct }: Props) {
 
   return (
     <View style={[completed && correct && { borderWidth: 4, borderColor: '#ffd33d' }, styles.container]}>
-      <Pressable style={[completed && correct && { backgroundColor: "green" }, styles.button]} onPress={() => dispatch(setScore({ difficulty, correct }))} disabled={completed}>
+      <Pressable
+        style={({pressed}) => [{ backgroundColor: completed && correct && "green" }, styles.button]}
+        onPress={() => dispatch(setScore({ difficulty, correct }))}
+        disabled={completed}
+      >
         <Text style={styles.label}>{label}</Text>
       </Pressable>
     </View>
