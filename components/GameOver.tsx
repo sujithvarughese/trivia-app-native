@@ -25,7 +25,7 @@ export default function GameOver() {
         {score === highScore && <Text>NEW HIGH SCORE</Text>}
         <Text>Your Score: {score}</Text>
         <View style={styles.buttonContainer}>
-          <Button label="Play Again" onPress={handleClickNewGame} />
+          <Button onPress={handleClickNewGame}><Text>Play Again</Text></Button>
         </View>
       </View>
     </Modal>

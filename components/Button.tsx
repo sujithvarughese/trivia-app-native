@@ -1,30 +1,13 @@
-import {View, StyleSheet, Pressable} from "react-native";
-import Text from "./Text"
+import {View, StyleSheet, Pressable, ButtonProps, PressableProps} from "react-native";
 
-type Props = {
-  label: string,
-  theme?: string,
-  onPress: () => void,
-}
-
-export default function Button({ label, theme, onPress }: Props) {
-
-  if (theme === 'primary') {
-    return (
-      <View style={[styles.container, { borderColor: '#ffd33d'}]}>
-        <Pressable style={[styles.button, { backgroundColor: 'green' }]} onPress={onPress}>
-          <Text style={styles.label}>{label}</Text>
-        </Pressable>
-      </View>
-    )
-  }
+export default function Button(props: PressableProps) {
   return (
     <View style={styles.container}>
       <Pressable
         style={({pressed}) => [{ backgroundColor: pressed && 'gray' }, styles.button,]}
-        onPress={onPress}
+        {...props}
       >
-        <Text style={styles.label}>{label}</Text>
+        {props.children}
       </Pressable>
     </View>
   )

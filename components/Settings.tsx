@@ -43,8 +43,8 @@ export default function Settings() {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Button label="Save" theme="primary" onPress={saveSettings}/>
-          <Button label="Cancel" onPress={() => dispatch(setShowSettings(false))} />
+          <Button onPress={saveSettings}><Text>Save</Text></Button>
+          <Button onPress={() => dispatch(setShowSettings(false))}><Text>Cancel</Text></Button>
         </View>
       </View>
 

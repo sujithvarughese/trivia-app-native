@@ -1,4 +1,4 @@
-import { View, StyleSheet} from "react-native";
+import {View, StyleSheet, ActivityIndicator} from "react-native";
 import Text from "./Text"
 import ResponseButton from "@/components/ResponseButton";
 import { useState } from "react";
@@ -14,6 +14,7 @@ export default function Question() {
   const questionIndex = useAppSelector(state => state.game.questionIndex)
   const category = useAppSelector(state => state.game.category)
   const completed = useAppSelector(state => state.game.completed)
+  const loading = useAppSelector(state => state.game.loading)
 
   const handleNextQuestion = () => {
     if (questionIndex >= questions.length) {
@@ -49,8 +50,8 @@ export default function Question() {
 
       {completed &&
       <View style={styles.actionContainer}>
-        <Button label="AI Explain" onPress={handleAiResponse} />
-        <Button label="Next" onPress={handleNextQuestion} />
+          <Button onPress={handleAiResponse}>{loading ? <ActivityIndicator /> : <Text>AI Explain</Text>}</Button>
+          <Button onPress={handleNextQuestion}><Text>Next</Text></Button>
       </View>
       }
 

@@ -14,11 +14,11 @@ export default function AiResponse() {
   return (
     <Modal animationType="slide" transparent={true} visible={!!aiResponse} style={styles.modal}>
       <View style={styles.container}>
-        <Text style={styles.question}>{questions[questionIndex].question}</Text>
+        <Text style={styles.question}>{questions[questionIndex]?.question}</Text>
         <Text style={styles.aiResponse}>{aiResponse}</Text>
 
         <View>
-          <Button label="Close" onPress={() => dispatch(closeAiResponse())} />
+          <Button onPress={() => dispatch(closeAiResponse())}><Text>Close</Text></Button>
         </View>
 
       </View>
