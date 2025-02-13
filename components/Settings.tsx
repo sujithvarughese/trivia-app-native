@@ -13,7 +13,7 @@ export default function Settings() {
   const showSettings = useAppSelector(state => state.game.showSettings)
   const dispatch = useAppDispatch()
 
-  const saveSettings = async () => {
+  const saveSettings = () => {
       dispatch(fetchQuestions(category))
       dispatch(setNewGame())
   }

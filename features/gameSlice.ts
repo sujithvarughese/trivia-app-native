@@ -4,14 +4,14 @@ import {str} from "ajv";
 export type stateProps = {
   score: number,
   highScore: number,
-  completed: any[],
   questions: any[],
   strikes: number,
   questionIndex: number,
   gameOver: boolean,
   category: number,
   loading: boolean,
-  showSettings: boolean
+  showSettings: boolean,
+  completed: boolean,
 }
 
 type SetScoreProps = {
@@ -22,14 +22,14 @@ type SetScoreProps = {
 const initialState: stateProps = {
   score: 0,
   highScore: 0,
-  completed: [],
   questions: [],
   strikes: 0,
   questionIndex: 0,
   gameOver: false,
   category: 9,
   loading: false,
-  showSettings: true
+  showSettings: true,
+  completed: false,
 }
 
 const gameSlice = createSlice({
@@ -56,6 +56,7 @@ const gameSlice = createSlice({
           state.gameOver = true
         }
         state.strikes = strikes
+        state.completed = true
         return
       }
       let multiplier = 0;
@@ -66,16 +67,19 @@ const gameSlice = createSlice({
       } else if (action.payload.difficulty === "Hard") {
         multiplier += 500
       }
+      state.completed = true
       state.score += multiplier
     },
     setNextQuestion: (state) => {
       state.questionIndex += 1
+      state.completed = false
     },
     setGameOver: (state) => {
       if (state.score > state.highScore) {
         state.highScore = state.score
       }
       state.gameOver = true
+      state.completed = true
     },
     unsetGameOver: (state) => {
       state.gameOver = false
@@ -91,12 +95,13 @@ const gameSlice = createSlice({
       state.questions = action.payload
       state.questionIndex = 0
       state.loading = false
+      state.completed = false
     })
     builder.addCase(fetchQuestions.pending, state => {
       state.loading = true
     })
     builder.addCase(fetchQuestions.rejected, state => {
-       state.loading = false
+      state.loading = false
       console.log("Failed to retrieve questions")
     })
   }

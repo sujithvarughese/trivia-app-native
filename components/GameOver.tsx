@@ -1,18 +1,22 @@
 import {View, StyleSheet, Modal} from "react-native";
 import Button from "@/components/Button";
-import {useDispatch} from "react-redux";
-import {setNewGame, unsetGameOver} from "@/features/gameSlice";
-import {useAppSelector} from "@/app/hooks";
+import {setNewGame, fetchQuestions} from "@/features/gameSlice";
+import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import Text from "../components/Text";
 
 
 export default function GameOver() {
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const score = useAppSelector(state => state.game.score)
   const highScore = useAppSelector(state => state.game.highScore)
   const gameOver = useAppSelector(state => state.game.gameOver)
+  const category = useAppSelector(state => state.game.category)
 
+  const handleClickNewGame = () => {
+    dispatch(fetchQuestions(category))
+    dispatch(setNewGame())
+  }
 
   return (
     <Modal animationType="slide" transparent={true} visible={gameOver}>
@@ -20,7 +24,7 @@ export default function GameOver() {
         <Text style={styles.title}>Game Over</Text>
         {score > highScore && <Text>NEW HIGH SCORE</Text>}
         <Text>Your Score: {score}</Text>
-        <Button label="Play Again" onPress={() => dispatch(setNewGame())} />
+        <Button label="Play Again" onPress={handleClickNewGame} />
       </View>
     </Modal>
   )

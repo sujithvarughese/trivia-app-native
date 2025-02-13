@@ -7,35 +7,16 @@ type Props = {
   label: string,
   difficulty: string,
   correct: boolean,
-  completed: boolean,
-  setCompleted: (completed: boolean) => void,
 }
 
-export default function ResponseButton({ label, difficulty, correct, completed, setCompleted }: Props) {
+export default function ResponseButton({ label, difficulty, correct }: Props) {
 
   const dispatch = useAppDispatch()
-  const questions = useAppSelector(state => state.game.questions)
-  const questionIndex = useAppSelector(state => state.game.questionIndex)
-  const category = useAppSelector(state => state.game.category)
-  const gameOver = useAppSelector(state => state.game.gameOver)
+  const completed = useAppSelector(state => state.game.completed)
 
-  const handlePress = () => {
-    setCompleted(true)
-    dispatch(setScore({ difficulty, correct }))
-  }
-
-  if (completed && correct) {
-    return (
-      <View style={[styles.container, { borderWidth: 4, borderColor: '#ffd33d' }]}>
-        <Pressable style={[styles.button, { backgroundColor: 'green' }]} onPress={handlePress} disabled={completed}>
-          <Text style={styles.label}>{label}</Text>
-        </Pressable>
-      </View>
-    )
-  }
   return (
-    <View style={styles.container}>
-      <Pressable style={styles.button} onPress={handlePress} disabled={completed}>
+    <View style={[completed && correct && { borderWidth: 4, borderColor: '#ffd33d' }, styles.container]}>
+      <Pressable style={[completed && correct && { backgroundColor: "green" }, styles.button]} onPress={() => dispatch(setScore({ difficulty, correct }))} disabled={completed}>
         <Text style={styles.label}>{label}</Text>
       </Pressable>
     </View>

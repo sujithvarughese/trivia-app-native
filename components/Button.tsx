@@ -1,5 +1,4 @@
 import {View, StyleSheet, Pressable} from "react-native";
-import {useTheme} from "@react-navigation/native";
 import Text from "./Text"
 
 type Props = {
@@ -9,9 +8,6 @@ type Props = {
 }
 
 export default function Button({ label, theme, onPress }: Props) {
-
-  const colors = useTheme().colors
-
 
   if (theme === 'primary') {
     return (

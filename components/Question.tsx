@@ -13,10 +13,9 @@ export default function Question() {
   const questions = useAppSelector(state => state.game.questions)
   const questionIndex = useAppSelector(state => state.game.questionIndex)
   const category = useAppSelector(state => state.game.category)
-  const [completed, setCompleted] = useState<boolean>(false)
+  const completed = useAppSelector(state => state.game.completed)
 
   const handleNextQuestion = () => {
-    setCompleted(false)
     if (questionIndex >= questions.length) {
       dispatch(fetchQuestions(category))
     } else {
@@ -40,16 +39,16 @@ export default function Question() {
             label={choice.response}
             difficulty={questions[questionIndex]?.difficulty}
             correct={choice.correct}
-            completed={completed}
-            setCompleted={setCompleted}
           />
         )}
       </View>
 
+      {completed &&
       <View style={styles.actionContainer}>
         <Button label="AI" onPress={() => console.log("AI")} />
         <Button label="Next" onPress={handleNextQuestion} />
       </View>
+      }
 
     </View>
   )
