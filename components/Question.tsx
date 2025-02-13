@@ -54,7 +54,6 @@ export default function Question() {
           <Button onPress={handleNextQuestion}><Text>Next</Text></Button>
       </View>
       }
-
     </View>
   )
 }

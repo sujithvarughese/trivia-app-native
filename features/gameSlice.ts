@@ -168,7 +168,6 @@ export const fetchAiResponse = createAsyncThunk("game/fetchAiResponse", async (q
   if (run.data.status === 'completed') {
     const messages = await openai.get(`/threads/${threadId}/messages`)
     openai.delete(`https://api.openai.com/v1/threads/${threadId}`)
-    console.log(messages.data.data[0].content[0].text.value.replace(/\【.*?】/g, ''))
     return messages.data.data[0].content[0].text.value.replace(/\【.*?】/g, '')
   }
 })
