@@ -17,10 +17,12 @@ import AiResponse from "@/components/aiResponse";
 export default function Index() {
 
   const dispatch = useAppDispatch()
-  const strikes = useAppSelector(state => state.game.strikes)
+  const showSettings = useAppSelector(state => state.game.showSettings)
+  const gameOver = useAppSelector(state => state.game.gameOver)
+  const aiResponse = useAppSelector(state => state.game.aiResponse)
 
   return (
-      <View style={style.container}>
+      <View style={[(gameOver || showSettings || aiResponse) && { opacity: 0.5 }, style.container]}>
         <Image
           source={require("../assets/images/pngtree-purple-technology-atmosphere-colorful-poster-banner-image_49591.jpg")}
           style={style.background}

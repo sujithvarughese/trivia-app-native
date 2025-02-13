@@ -20,7 +20,6 @@ export default function Settings() {
 
   return (
     <Modal animationType="slide" transparent={true} visible={showSettings}>
-
       <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Settings</Text>
@@ -47,7 +46,6 @@ export default function Settings() {
           <Button onPress={() => dispatch(setShowSettings(false))}><Text>Cancel</Text></Button>
         </View>
       </View>
-
     </Modal>
   )
 }
@@ -62,6 +60,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     alignItems: 'center',
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
   titleContainer: {
     height: '16%',

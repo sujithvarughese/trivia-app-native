@@ -1,10 +1,10 @@
-import {View, StyleSheet, Pressable, ButtonProps, PressableProps} from "react-native";
+import {View, StyleSheet, Pressable, PressableProps} from "react-native";
 
 export default function Button(props: PressableProps) {
   return (
     <View style={styles.container}>
       <Pressable
-        style={({pressed}) => [{ backgroundColor: pressed && 'gray' }, styles.button,]}
+        style={({pressed}) => [{ backgroundColor: pressed ? 'gray' : undefined }, styles.button,]}
         {...props}
       >
         {props.children}
@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
     height: 68,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 4,
+    borderWidth: 2,
+    borderColor: '#fff',
     borderRadius: 18
   },
   button: {

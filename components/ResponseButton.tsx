@@ -14,36 +14,38 @@ export default function ResponseButton({ label, difficulty, correct }: Props) {
   const dispatch = useAppDispatch()
   const completed = useAppSelector(state => state.game.completed)
 
-  return (
-    <View style={[completed && correct && { borderWidth: 4, borderColor: '#ffd33d' }, styles.container]}>
+  if (completed && correct) {
+    return (
       <Pressable
-        style={({pressed}) => [{ backgroundColor: completed && correct && "green" }, styles.button]}
+        style={({pressed}) => [{ backgroundColor: "green" }, styles.button]}
         onPress={() => dispatch(setScore({ difficulty, correct }))}
         disabled={completed}
       >
         <Text style={styles.label}>{label}</Text>
       </Pressable>
-    </View>
+    )
+  }
+
+  return (
+    <Pressable
+      style={({pressed}) => [{ backgroundColor: pressed ? "gray" : undefined }, styles.button]}
+      onPress={() => dispatch(setScore({ difficulty, correct }))}
+      disabled={completed}
+    >
+      <Text style={styles.label}>{label}</Text>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    width: 320,
+  button: {    width: 320,
     height: 84,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 3,
     borderColor: '#fff',
     borderWidth: 2,
-    borderRadius: 18
-  },
-  button: {
-    borderRadius: 10,
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderRadius: 18,
     flexDirection: 'row',
   },
   label: {

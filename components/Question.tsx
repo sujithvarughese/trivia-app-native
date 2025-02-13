@@ -1,10 +1,11 @@
-import {View, StyleSheet, ActivityIndicator} from "react-native";
+import {View, StyleSheet, ActivityIndicator, Pressable} from "react-native";
 import Text from "./Text"
 import ResponseButton from "@/components/ResponseButton";
-import { useState } from "react";
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import Button from "@/components/Button";
 import {fetchAiResponse, fetchQuestions, setNextQuestion} from "@/features/gameSlice";
+import AntDesign from '@expo/vector-icons/AntDesign';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 
 export default function Question() {
@@ -50,8 +51,12 @@ export default function Question() {
 
       {completed &&
       <View style={styles.actionContainer}>
-          <Button onPress={handleAiResponse}>{loading ? <ActivityIndicator /> : <Text>AI Explain</Text>}</Button>
-          <Button onPress={handleNextQuestion}><Text>Next</Text></Button>
+          <Pressable onPress={handleAiResponse}>
+            {loading ? <ActivityIndicator /> : <MaterialCommunityIcons name="brain" size={42} color="#fff" />}
+          </Pressable>
+          <Pressable onPress={handleNextQuestion}>
+              <AntDesign name="right" size={42} color="#fff" />
+          </Pressable>
       </View>
       }
     </View>
@@ -64,7 +69,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 12,
-    gap: 32,
+    gap: 42,
   },
   questionContainer: {
     justifyContent: 'center',
@@ -83,9 +88,8 @@ const styles = StyleSheet.create({
   },
   actionContainer: {
     flexDirection: 'row',
-    gap: 24,
-    marginHorizontal: 90,
     alignItems: 'center',
-    justifyContent: 'space-between'
-  }
+    width: '100%',
+    gap: 84
+  },
 })
