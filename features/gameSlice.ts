@@ -12,6 +12,7 @@ export type stateProps = {
   loading: boolean,
   showSettings: boolean,
   completed: boolean,
+  aiResponse: string,
 }
 
 type SetScoreProps = {
@@ -30,6 +31,7 @@ const initialState: stateProps = {
   loading: false,
   showSettings: true,
   completed: false,
+  aiResponse: "",
 }
 
 const gameSlice = createSlice({
@@ -88,6 +90,9 @@ const gameSlice = createSlice({
     },
     setShowSettings: (state, action) => {
       state.showSettings = action.payload || !state.showSettings
+    },
+    closeAiResponse: (state) => {
+      state.aiResponse = ""
     }
   },
   extraReducers: builder => {
@@ -103,6 +108,17 @@ const gameSlice = createSlice({
     builder.addCase(fetchQuestions.rejected, state => {
       state.loading = false
       console.log("Failed to retrieve questions")
+    })
+    builder.addCase(fetchAiResponse.fulfilled, (state, action) => {
+      state.aiResponse = action.payload
+      state.loading = false
+    })
+    builder.addCase(fetchAiResponse.pending, state => {
+      state.loading = true
+    })
+    builder.addCase(fetchAiResponse.rejected, state => {
+      state.loading = false
+      console.log("Failed to retrieve response from AI")
     })
   }
 })
@@ -138,13 +154,12 @@ export const fetchQuestions = createAsyncThunk("game/fetchQuestions", async (cat
 })
 
 export const fetchAiResponse = createAsyncThunk("game/fetchAiResponse", async (question: string) => {
-  const run = await openai.post("/threads/runs", {
+  let run = await openai.post("/threads/runs", {
     assistant_id: process.env.EXPO_PUBLIC_ASSISTANT_ID,
     thread: {
       messages: [{role: "user", content: question }]
     }
   })
-  console.log(run.data)
   const threadId = run.data.thread_id
   const runId = run.data.id
   while (run.data.status !== "completed") {
@@ -159,4 +174,4 @@ export const fetchAiResponse = createAsyncThunk("game/fetchAiResponse", async (q
 })
 
 export default gameSlice.reducer;
-export const { setNewGame, setCategory, setScore, setNextQuestion, setGameOver, unsetGameOver, setShowSettings } = gameSlice.actions
+export const { setNewGame, setCategory, setScore, setNextQuestion, setGameOver, unsetGameOver, setShowSettings, closeAiResponse } = gameSlice.actions

@@ -25,10 +25,8 @@ export default function Question() {
 
   const handleAiResponse = () => {
     const correctAnswer = questions[questionIndex].choices.find((choice: { response: string, correct: boolean }) => choice.correct).response
-    dispatch(fetchAiResponse(`${questions[questionIndex].question}: ${correctAnswer}`))
+    dispatch(fetchAiResponse(`${questions[questionIndex].question} ${correctAnswer}`))
   }
-
-
 
   return (
     <View style={styles.container}>

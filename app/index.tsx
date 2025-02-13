@@ -12,6 +12,7 @@ import Strikes from "@/components/Strikes";
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import {useTheme} from "@react-navigation/native";
 import Button from "@/components/Button";
+import AiResponse from "@/components/aiResponse";
 
 export default function Index() {
 
@@ -40,6 +41,7 @@ export default function Index() {
 
         <Settings />
         <GameOver />
+        <AiResponse />
 
         <View style={style.questionContainer}>
           <Question />
