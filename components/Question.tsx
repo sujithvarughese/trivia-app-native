@@ -33,10 +33,12 @@ export default function Question() {
   return (
     <View style={styles.container}>
 
+      {questions.length &&
       <View style={styles.questionContainer}>
         <Text style={styles.category}>{questions[questionIndex]?.category} - {questions[questionIndex]?.difficulty}</Text>
         <Text style={styles.question}>{questions[questionIndex]?.question}</Text>
       </View>
+      }
 
       <View style={styles.responseContainer}>
         {questions[questionIndex]?.choices.map((choice: any, index: number) =>

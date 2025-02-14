@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { openai } from "../utilities/api"
+import { openai } from "@/utilities/api"
 
 export type stateProps = {
   score: number,

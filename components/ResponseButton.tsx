@@ -1,5 +1,5 @@
-import { View, StyleSheet, Pressable} from "react-native";
-import {fetchQuestions, setNextQuestion, setScore} from '@/features/gameSlice'
+import { StyleSheet, Pressable} from "react-native";
+import { setScore } from '@/features/gameSlice'
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import Text from "@/components/Text";
 

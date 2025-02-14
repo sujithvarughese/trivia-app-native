@@ -1,17 +1,13 @@
 import {View, StyleSheet, Image} from "react-native";
-import {Stack} from "expo-router";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import {Pressable} from "react-native";
-import {setGameOver, setShowSettings} from "@/features/gameSlice";
+import {setShowSettings} from "@/features/gameSlice";
 import Settings from "@/components/Settings";
 import Question from "@/components/Question";
-import {useEffect} from "react";
 import GameOver from "@/components/GameOver";
 import Score from "@/components/Score";
 import Strikes from "@/components/Strikes";
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
-import {useTheme} from "@react-navigation/native";
-import Button from "@/components/Button";
 import AiResponse from "@/components/aiResponse";
 
 export default function Index() {
@@ -72,7 +68,8 @@ const style = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
   scoreContainer: {
     position: "absolute",
@@ -82,5 +79,6 @@ const style = StyleSheet.create({
   },
   questionContainer: {
     height: '100%',
+    paddingHorizontal: 10,
   },
 })
