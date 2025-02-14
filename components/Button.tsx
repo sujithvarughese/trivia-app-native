@@ -4,8 +4,8 @@ export default function Button(props: PressableProps) {
   return (
     <View style={styles.container}>
       <Pressable
-        style={({pressed}) => [{ backgroundColor: pressed ? 'gray' : undefined }, styles.button,]}
         {...props}
+        style={({pressed}) => [styles.button, { backgroundColor: pressed ? 'gray' : undefined }, props.style as object]}
       >
         {props.children}
       </Pressable>
@@ -18,16 +18,15 @@ const styles = StyleSheet.create({
     height: 68,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: '#fff',
-    borderRadius: 18
   },
   button: {
-    borderRadius: 18,
-    width: '100%',
-    height: '100%',
+    height: 68,
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#fff',
+    borderRadius: 18,
+    width: '100%',
     flexDirection: 'row',
   },
   label: {

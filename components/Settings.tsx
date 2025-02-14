@@ -33,6 +33,7 @@ export default function Settings() {
           >
             {categories.map((category) =>
               <Picker.Item
+                color="#fff"
                 key={category.value}
                 label={category.label}
                 value={category.value}
@@ -42,7 +43,7 @@ export default function Settings() {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Button onPress={saveSettings}><Text>Save</Text></Button>
+          <Button onPress={saveSettings} style={{ backgroundColor: "green" }}><Text>Save</Text></Button>
           <Button onPress={() => dispatch(setShowSettings(false))}><Text>Cancel</Text></Button>
         </View>
       </View>
@@ -87,6 +88,7 @@ const styles = StyleSheet.create({
   },
   pickerTitle: {
     textAlign: 'center',
+    fontWeight: 700,
   },
   buttonContainer: {
     flexDirection: 'row',

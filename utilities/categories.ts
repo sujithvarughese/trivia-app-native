@@ -10,7 +10,7 @@ export const categories: category[] = [
   { "value": 12, "label": "Entertainment: Music" },
   { "value": 13, "label": "Entertainment: Musicals & Theatres" },
   { "value": 14, "label": "Entertainment: Television" },
-  { "value": 15, "label": "Entertainment: Vvalueeo Games" },
+  { "value": 15, "label": "Entertainment: Video Games" },
   { "value": 16, "label": "Entertainment: Board Games" },
   { "value": 17, "label": "Science & Nature" },
   { "value": 18, "label": "Science: Computers" },

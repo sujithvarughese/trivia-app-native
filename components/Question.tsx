@@ -16,6 +16,7 @@ export default function Question() {
   const category = useAppSelector(state => state.game.category)
   const completed = useAppSelector(state => state.game.completed)
   const loading = useAppSelector(state => state.game.loading)
+  const gameOver = useAppSelector(state => state.game.gameOver)
 
   const handleNextQuestion = () => {
     if (questionIndex >= questions.length) {
@@ -33,7 +34,7 @@ export default function Question() {
   return (
     <View style={styles.container}>
 
-      {questions.length &&
+      {!!questions.length &&
       <View style={styles.questionContainer}>
         <Text style={styles.category}>{questions[questionIndex]?.category} - {questions[questionIndex]?.difficulty}</Text>
         <Text style={styles.question}>{questions[questionIndex]?.question}</Text>
@@ -56,9 +57,11 @@ export default function Question() {
           <Pressable onPress={handleAiResponse}>
             {loading ? <ActivityIndicator /> : <MaterialCommunityIcons name="brain" size={42} color="#fff" />}
           </Pressable>
-          <Pressable onPress={handleNextQuestion}>
+          {!gameOver &&
+            <Pressable onPress={handleNextQuestion}>
               <AntDesign name="right" size={42} color="#fff" />
           </Pressable>
+          }
       </View>
       }
     </View>

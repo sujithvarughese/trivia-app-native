@@ -8,6 +8,7 @@ export type stateProps = {
   strikes: number,
   questionIndex: number,
   gameOver: boolean,
+  showGameOver: boolean,
   category: number,
   loading: boolean,
   showSettings: boolean,
@@ -27,6 +28,7 @@ const initialState: stateProps = {
   strikes: 0,
   questionIndex: 0,
   gameOver: false,
+  showGameOver: false,
   category: 9,
   loading: false,
   showSettings: true,
@@ -44,6 +46,7 @@ const gameSlice = createSlice({
       state.questionIndex = 0
       state.strikes = 0
       state.gameOver = false
+      state.showGameOver = false
     },
     setCategory: (state: stateProps, action: PayloadAction<number>) => {
       state.category = action.payload
@@ -56,6 +59,7 @@ const gameSlice = createSlice({
             state.highScore = state.score
           }
           state.gameOver = true
+          state.showGameOver = true
         }
         state.strikes = strikes
         state.completed = true
@@ -76,17 +80,8 @@ const gameSlice = createSlice({
       state.questionIndex += 1
       state.completed = false
     },
-    setGameOver: (state) => {
-      if (state.score > state.highScore) {
-        state.highScore = state.score
-      }
-      state.gameOver = true
-      state.completed = true
-    },
-    unsetGameOver: (state) => {
-      state.gameOver = false
-      state.score = 0
-      state.strikes = 0
+    setShowGameOver: (state, action) => {
+      state.showGameOver = action.payload || !state.showGameOver
     },
     setShowSettings: (state, action) => {
       state.showSettings = action.payload || !state.showSettings
@@ -173,4 +168,4 @@ export const fetchAiResponse = createAsyncThunk("game/fetchAiResponse", async (q
 })
 
 export default gameSlice.reducer;
-export const { setNewGame, setCategory, setScore, setNextQuestion, setGameOver, unsetGameOver, setShowSettings, closeAiResponse } = gameSlice.actions
+export const { setNewGame, setCategory, setScore, setNextQuestion, setShowGameOver, setShowSettings, closeAiResponse } = gameSlice.actions
