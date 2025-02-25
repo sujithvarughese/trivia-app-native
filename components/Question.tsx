@@ -57,7 +57,7 @@ export default function Question() {
           <Pressable onPress={handleAiResponse}>
             {loading ? <ActivityIndicator /> : <MaterialCommunityIcons name="brain" size={42} color="#fff" />}
           </Pressable>
-          {!gameOver &&
+          {!gameOver && !loading &&
             <Pressable onPress={handleNextQuestion}>
               <AntDesign name="right" size={42} color="#fff" />
           </Pressable>

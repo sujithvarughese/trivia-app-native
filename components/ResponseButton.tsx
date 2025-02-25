@@ -38,7 +38,8 @@ export default function ResponseButton({ label, difficulty, correct }: Props) {
 }
 
 const styles = StyleSheet.create({
-  button: {    width: 320,
+  button: {
+    width: 320,
     height: 84,
     alignItems: 'center',
     justifyContent: 'center',

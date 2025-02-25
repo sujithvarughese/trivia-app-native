@@ -36,7 +36,7 @@ export default function GameOver() {
 const styles = StyleSheet.create({
   container: {
     height: 320,
-    width: 240,
+    width: 320,
     backgroundColor: '#25292e',
     borderRadius: 18,
     margin: 'auto',
@@ -49,6 +49,8 @@ const styles = StyleSheet.create({
     fontSize: 32,
   },
   buttonContainer: {
-
+    flexDirection: 'row',
+    marginHorizontal: 60,
+    gap: 32
   }
 })
