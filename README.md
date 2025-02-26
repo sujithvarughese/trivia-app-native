@@ -1,50 +1,60 @@
-# Welcome to your Expo app 👋
+# Trivia Night AI - README
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Overview
+Trivia Challenge is a fun and engaging trivia game where users answer questions to earn points. The goal is to achieve the highest score possible before striking out after three incorrect answers. The app also features an AI-powered explanation system that provides detailed insights into each question and answer.
 
-## Get started
+## Features
+* Answer trivia questions to earn points.
+* Strike out after three incorrect answers.
+* AI-generated explanations for each question and answer.
+* Track your high score and improve over time.
 
-1. Install dependencies
+## How to Play
+1. Start the game by choosing a category to receive a random trivia question.
+2. Choose the correct answer from the provided options.
+3. If you answer correctly, you earn points and move on to the next question.
+4. If you answer incorrectly, you receive a strike.
+5. After three strikes, the game ends and your final score is displayed.
+6. Use the AI-powered explanation feature to learn more about each question and answer.
 
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+## Installation & Setup
+To run the Trivia Challenge app locally:
+1. Clone the repository:
+```
+git clone https://github.com/sujithvarughese/trivia-app-native.git
+cd trivia-app-native
+```
+2. Install dependencies:
+```
+npm install
+```
+3. Start the development server:
+```
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Technologies Used
 
-## Learn more
+* React Native
+* Expo
+* OpenAI Assistants API (for AI-generated explanations)
 
-To learn more about developing your project with Expo, look at the following resources:
+## Future Enhancements
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+* Add multiplayer mode.
+* Introduce time-based challenges for added difficulty.
 
-## Join the community
+## Contributing
+Contributions are welcome! Feel free to fork the repository, submit pull requests, or suggest features.
 
-Join our community of developers creating universal apps.
+## License
+This project is licensed under the MIT License.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Contact
+For any questions or feedback, please reach out.
+
+## Support
+https://ultimate-trivia.netlify.app/#/support
+
+## Privacy Policy
+https://ultimate-trivia.netlify.app/#/privacy
