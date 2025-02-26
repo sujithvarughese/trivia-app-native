@@ -33,7 +33,7 @@ export default function Index() {
 
           <Pressable
             onPress={() => dispatch(setShowSettings(true))}>
-            <Ionicons name="settings-sharp" size={24} color="#fefefe"/>
+            <Ionicons name="settings-sharp" size={28} color="#fefefe"/>
           </Pressable>
         </View>
 
