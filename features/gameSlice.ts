@@ -149,22 +149,17 @@ export const fetchQuestions = createAsyncThunk("game/fetchQuestions", async (cat
 })
 
 export const fetchAiResponse = createAsyncThunk("game/fetchAiResponse", async (question: string) => {
-  let run = await openai.post("/threads/runs", {
-    assistant_id: process.env.EXPO_PUBLIC_ASSISTANT_ID,
-    thread: {
-      messages: [{role: "user", content: question }]
-    }
+  const response = await openai.post("", {
+    model: "gpt-3.5-turbo-0125",
+    max_tokens: 400,
+    messages: [
+      {
+        role: "system",
+        content: `You are a helpful assistant for a trivia application to help users get quick facts about trivia questions. You will be given a question and an answer, and should give a brief explanation about the subject. Use light humor when needed: ${question}`
+      },
+    ]
   })
-  const threadId = run.data.thread_id
-  const runId = run.data.id
-  while (run.data.status !== "completed") {
-    run = await openai.get(`/threads/${threadId}/runs/${runId}`)
-  }
-  if (run.data.status === 'completed') {
-    const messages = await openai.get(`/threads/${threadId}/messages`)
-    openai.delete(`https://api.openai.com/v1/threads/${threadId}`)
-    return messages.data.data[0].content[0].text.value.replace(/\【.*?】/g, '')
-  }
+  return response.data.choices[0].message.content
 })
 
 export default gameSlice.reducer;
