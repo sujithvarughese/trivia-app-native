@@ -151,11 +151,11 @@ export const fetchQuestions = createAsyncThunk("game/fetchQuestions", async (cat
 export const fetchAiResponse = createAsyncThunk("game/fetchAiResponse", async (question: string) => {
   const response = await openai.post("", {
     model: "gpt-3.5-turbo-0125",
-    max_tokens: 400,
+    max_tokens: 100,
     messages: [
       {
         role: "system",
-        content: `You are a helpful assistant for a trivia application to help users get quick facts about trivia questions. You will be given a question and an answer, and should give a brief explanation about the subject. Use light humor when needed: ${question}`
+        content: `You are a helpful assistant for a trivia application to help users get quick facts about trivia questions. You will be given a question and an answer, and should give a brief explanation about the subject. Use light humor when needed: Maximum 600 characters. ${question}`
       },
     ]
   })
