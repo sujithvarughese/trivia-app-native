@@ -4,6 +4,7 @@ import { openai } from "@/utilities/api"
 export type stateProps = {
   score: number,
   highScore: number,
+  difficulty: string,
   questions: any[],
   strikes: number,
   questionIndex: number,
@@ -24,6 +25,7 @@ type SetScoreProps = {
 const initialState: stateProps = {
   score: 0,
   highScore: 0,
+  difficulty: "random",
   questions: [],
   strikes: 0,
   questionIndex: 0,
@@ -50,6 +52,9 @@ const gameSlice = createSlice({
     },
     setCategory: (state: stateProps, action: PayloadAction<number>) => {
       state.category = action.payload
+    },
+    setDifficulty: (state: stateProps, action: PayloadAction<string>) => {
+      state.difficulty = action.payload
     },
     setScore: (state: stateProps, action: PayloadAction<SetScoreProps>) => {
       if (!action.payload.correct) {
@@ -118,8 +123,8 @@ const gameSlice = createSlice({
   }
 })
 
-export const fetchQuestions = createAsyncThunk("game/fetchQuestions", async (category: number) => {
-  const response = await fetch(`https://opentdb.com/api.php?amount=25&category=${category}&type=multiple&encode=url3986`)
+export const fetchQuestions = createAsyncThunk("game/fetchQuestions", async ({ category, difficulty }: { category: number; difficulty: string }) => {
+  const response = difficulty === "random" ? await fetch(`https://opentdb.com/api.php?amount=25&category=${category}&type=multiple&encode=url3986`) : await fetch(`https://opentdb.com/api.php?amount=25&category=${category}&difficulty=${difficulty}&type=multiple&encode=url3986`)
   type resultsType = {
     category: string,
     difficulty: string,
@@ -155,7 +160,7 @@ export const fetchAiResponse = createAsyncThunk("game/fetchAiResponse", async (q
     messages: [
       {
         role: "system",
-        content: `You are a helpful assistant for a trivia application to help users get quick facts about trivia questions. You will be given a question and an answer, and should give a brief explanation about the subject. Use light humor when needed: Maximum 600 characters. ${question}`
+        content: `You are a helpful assistant for a trivia application to help users get quick facts about trivia questions. You will be given a question and an answer, and should give a brief explanation about the subject. Use light humor when needed: Maximum 500 characters. ${question}`
       },
     ]
   })
@@ -163,4 +168,4 @@ export const fetchAiResponse = createAsyncThunk("game/fetchAiResponse", async (q
 })
 
 export default gameSlice.reducer;
-export const { setNewGame, setCategory, setScore, setNextQuestion, setShowGameOver, setShowSettings, closeAiResponse } = gameSlice.actions
+export const { setNewGame, setCategory, setDifficulty, setScore, setNextQuestion, setShowGameOver, setShowSettings, closeAiResponse } = gameSlice.actions

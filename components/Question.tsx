@@ -17,10 +17,11 @@ export default function Question() {
   const completed = useAppSelector(state => state.game.completed)
   const loading = useAppSelector(state => state.game.loading)
   const gameOver = useAppSelector(state => state.game.gameOver)
+  const difficulty = useAppSelector(state => state.game.difficulty)
 
   const handleNextQuestion = () => {
     if (questionIndex >= questions.length) {
-      dispatch(fetchQuestions(category))
+      dispatch(fetchQuestions({ category, difficulty }))
     } else {
       dispatch(setNextQuestion())
     }

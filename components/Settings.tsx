@@ -1,8 +1,8 @@
-import {View, StyleSheet, Modal} from "react-native";
+import {View, StyleSheet, Modal, Pressable} from "react-native";
 import { categories } from "@/utilities/categories";
 import Button from "@/components/Button";
 import {Picker} from '@react-native-picker/picker';
-import {fetchQuestions, setCategory, setNewGame, setShowSettings} from "@/features/gameSlice";
+import {fetchQuestions, setCategory, setDifficulty, setNewGame, setShowSettings} from "@/features/gameSlice";
 import {useAppDispatch, useAppSelector} from "@/app/hooks";
 import Text from "@/components/Text";
 
@@ -10,11 +10,12 @@ import Text from "@/components/Text";
 export default function Settings() {
 
   const category = useAppSelector(state => state.game.category)
+  const difficulty = useAppSelector(state => state.game.difficulty)
   const showSettings = useAppSelector(state => state.game.showSettings)
   const dispatch = useAppDispatch()
 
   const saveSettings = () => {
-      dispatch(fetchQuestions(category))
+      dispatch(fetchQuestions({ category, difficulty }))
       dispatch(setNewGame())
   }
 
@@ -41,7 +42,14 @@ export default function Settings() {
             )}
           </Picker>
         </View>
-
+        {/*
+        <View style={styles.difficultyContainer}>
+          <Pressable style={[styles.difficultyButton, difficulty === "easy" && styles.difficultySelected]} onPress={() => dispatch(setDifficulty("easy"))}><Text>Easy</Text></Pressable>
+          <Pressable style={[styles.difficultyButton, difficulty === "medium" && styles.difficultySelected]} onPress={() => dispatch(setDifficulty("medium"))}><Text>Medium</Text></Pressable>
+          <Pressable style={[styles.difficultyButton, difficulty === "hard" && styles.difficultySelected]} onPress={() => dispatch(setDifficulty("hard"))}><Text>Hard</Text></Pressable>
+          <Pressable style={[styles.difficultyButton, difficulty === "random" && styles.difficultySelected]} onPress={() => dispatch(setDifficulty("random"))}><Text>Random</Text></Pressable>
+        </View>
+        */}
         <View style={styles.buttonContainer}>
           <Button onPress={saveSettings} style={{ backgroundColor: "green" }}><Text>Play!</Text></Button>
           <Button onPress={() => dispatch(setShowSettings(false))}><Text>Cancel</Text></Button>
@@ -64,6 +72,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    gap: 16,
   },
   titleContainer: {
     height: '16%',
@@ -71,7 +80,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#464C55',
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
-    paddingHorizontal: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -83,12 +91,27 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     width: '100%',
-    paddingTop: 20,
-
   },
   pickerTitle: {
     textAlign: 'center',
     fontWeight: 700,
+  },
+  difficultyContainer: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  difficultyButton: {
+    borderWidth: 2,
+    borderColor: 'darkgray',
+    borderRadius: 8,
+    padding: 12,
+    width: '23%',
+    height: 64,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  difficultySelected: {
+    backgroundColor: 'mediumpurple',
   },
   buttonContainer: {
     flexDirection: 'row',

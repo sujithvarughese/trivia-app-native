@@ -12,9 +12,10 @@ export default function GameOver() {
   const highScore = useAppSelector(state => state.game.highScore)
   const showGameOver = useAppSelector(state => state.game.showGameOver)
   const category = useAppSelector(state => state.game.category)
+  const difficulty = useAppSelector(state => state.game.difficulty)
 
   const handleClickNewGame = () => {
-    dispatch(fetchQuestions(category))
+    dispatch(fetchQuestions({ category, difficulty }))
     dispatch(setNewGame())
   }
 

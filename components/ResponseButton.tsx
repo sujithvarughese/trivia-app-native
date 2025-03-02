@@ -50,7 +50,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   label: {
-    fontSize: 20,
-    fontWeight: '600',
+    fontSize: 16,
+    padding: 8,
+    textAlign: 'center',
   }
 });
